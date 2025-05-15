@@ -1,0 +1,39 @@
+CREATE DATABASE inventario;
+GO
+
+USE inventario;
+GO
+
+-- Crear tabla de roles
+CREATE TABLE roles (
+    idRol INT PRIMARY KEY,
+    nameRol VARCHAR(50) NOT NULL
+);
+
+-- Crear tabla de usuarios
+CREATE TABLE users (
+    idUser INT PRIMARY KEY IDENTITY(1,1),
+    name VARCHAR(100) NOT NULL,
+    mail VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    idRol INT NOT NULL,
+    FOREIGN KEY (idRol) REFERENCES Rol(idRol)
+);
+
+-- Crear tabla de productos
+CREATE TABLE products (
+    idProduct INT PRIMARY KEY IDENTITY(1,1),
+    name VARCHAR(100) NOT NULL,
+    amount INT DEFAULT 0,
+    status BIT NOT NULL 
+);
+
+-- Crear tabla de movimientos de inventario
+CREATE TABLE movements (
+    idMovements INT PRIMARY KEY IDENTITY(1,1),
+    idProduct INT NOT NULL,
+    type VARCHAR(50) NOT NULL, -- Entrada, Salida, Baja
+    amount INT NOT NULL,
+    timestamp DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
+);
